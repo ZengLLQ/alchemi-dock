@@ -104,7 +104,8 @@ def _rodrigues_rotate(points: FloatArray, origin: FloatArray, axis: FloatArray, 
     cross = np.cross(k, v)
     dot = np.sum(v * k, axis=1, keepdims=True)
     rotated = v * cos_a + cross * sin_a + k[None, :] * dot * (1.0 - cos_a)
-    return rotated + origin
+    out: FloatArray = np.asarray(rotated + origin, dtype=np.float64)
+    return out
 
 
 def _downstream_component(
@@ -296,7 +297,8 @@ def _transform_conformer(
             coords[downstream] = _rodrigues_rotate(coords[downstream], coords[u], coords[v] - coords[u], float(angle))
     coords = coords - np.mean(coords, axis=0, keepdims=True)
     rot_m = _quaternion_to_matrix(quat)
-    return coords @ rot_m.T + translation[None, :]
+    out: FloatArray = np.asarray(coords @ rot_m.T + translation[None, :], dtype=np.float64)
+    return out
 
 
 def dock_ligand(
