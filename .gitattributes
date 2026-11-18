@@ -1,0 +1,4 @@
+# Ensure Linguist classifies this repository as 100% Python
+*.py linguist-language=Python
+tests/fixtures/** linguist-detectable=false
+docs/** linguist-documentation
